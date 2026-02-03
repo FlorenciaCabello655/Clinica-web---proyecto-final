@@ -1,0 +1,51 @@
+import logo from "../../assets/logo.png";
+import { Link, useLocation } from "react-router";
+
+function Navbar() {
+  const location = useLocation();
+
+  return (
+    <nav className="w-full h-25 bg-orange-100 flex justify-between items-center px-4">
+      <div>
+        <img src={logo} alt="imagen de clinica" className="w-80" />
+      </div>
+
+      <div>
+        <Link
+          className={`me-5 font-semibold duration-200 ${
+            location.pathname === "/"
+              ? "text-zinc-800"
+              : "text-zinc-500 hover:text-zinc-800"
+          }`}
+          to="/"
+        >
+          Inicio
+        </Link>
+
+        <Link
+          className={`me-5 font-semibold duration-200 ${
+            location.pathname === "/register"
+              ? "text-zinc-800"
+              : "text-zinc-500 hover:text-zinc-800"
+          }`}
+          to="/register"
+        >
+          Registrarse
+        </Link>
+
+        <Link
+          className={`p-2 rounded-full font-bold text-white duration-200 ${
+            location.pathname === "/login"
+              ? "bg-orange-400"
+              : "bg-orange-200 hover:bg-orange-300"
+          }`}
+          to="/login"
+        >
+          Iniciar sesión
+        </Link>
+      </div>
+    </nav>
+  );
+}
+
+export default Navbar;
