@@ -5,6 +5,7 @@ import "./App.css";
 import Navbar from "./components/navbar/navbar";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/home/home";
+import Footer from "./components/footer/footer";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
         </Routes>
+        <Footer></Footer>
       </section>
     </>
   );
