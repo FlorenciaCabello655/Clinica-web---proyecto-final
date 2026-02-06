@@ -47,7 +47,7 @@ function Home() {
       <section className="  flex justify-around">
   <div className="bg-[#A2AF9B] mx-5 mt-5 p-7 h-180 w- text-3xl text-white flex items-center justify-center rounded-lg flex-col">
     <h1 className="mb-9">Acerca de nosotros</h1>
-    <h2 className="">
+    <h2 className="descripcion">
       Contamos con experiencia de mas de 10 años.
       Brindamos atención médica integral con un enfoque humano, profesional y
       cercano. Nuestro equipo de especialistas trabaja con compromiso y
