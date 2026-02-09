@@ -38,17 +38,18 @@ function Home() {
           <h1 className="text-lg md:text-2xl lg:text-3xl">Oftalmologia</h1>
         </div>
       </section>
-
-      
       <section className="  flex justify-around">
         <div className="bg-[#A2AF9B] mx-5 mt-5 p-7 h-180 w- text-3xl text-white flex items-center justify-center rounded-lg flex-col">
           <h1 className="mb-9">Acerca de nosotros</h1>
           <h2 className="descripcion">
-            Contamos con experiencia de mas de 10 años. Brindamos atención
-            médica integral con un enfoque humano, profesional y cercano.
-            Nuestro equipo de especialistas trabaja con compromiso y tecnología
-            actual para cuidar tu salud y la de tu familia, priorizando siempre
-            la confianza, la calidez y el bienestar.
+            Somos una clínica con años de experiencia dedicados al cuidado
+            integral de la salud. A lo largo de nuestra trayectoria, hemos
+            trabajado con el compromiso constante de brindar atención médica de
+            calidad, incorporando de manera continua nuevas tecnologías y
+            prácticas actualizadas para ofrecer diagnósticos precisos y
+            tratamientos seguros. Nuestro equipo profesional actúa con ética,
+            responsabilidad y vocación de servicio, priorizando siempre el
+            bienestar de nuestros pacientes.
           </h2>
           <img src={Imagen} alt="" className=" w-150 rounded-lg mt-6" />{" "}
         </div>
