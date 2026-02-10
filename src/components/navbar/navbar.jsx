@@ -24,11 +24,11 @@ function Navbar() {
 
         <Link
           className={`me-5 font-semibold duration-200 ${
-            location.pathname === "/register"
+            location.pathname === "/registro"
               ? "text-zinc-800"
               : "text-zinc-500 hover:text-zinc-800"
           }`}
-          to="/register"
+          to="/registro"
         >
           Registrarse
         </Link>
