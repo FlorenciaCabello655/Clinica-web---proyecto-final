@@ -15,7 +15,7 @@ function Registro() {
   return (
     <>
       <section className="w-full min-h-screen p-6">
-        <div className="w-100 h-110 p-5 bg-amber-200 m-auto mt-30 rounded-lg">
+        <div className="w-100 h-110 p-5 bg-[#A2AF9B] m-auto mt-30 rounded-lg">
           <h1 className="text-white text-4xl text-center">Registrarse</h1>
           <h2 className="text-white text-xl text-center">
             Por favor registrarse para continuar
@@ -95,14 +95,14 @@ function Registro() {
             <div className="flex justify-center w-full">
               <button
                 type="submit"
-                className="text-white text-xl bg-amber-950 rounded-4xl p-2 "
+                className="text-white text-xl bg-orange-200 rounded-4xl p-2 "
               >
                 <h1>Registrarse</h1>
               </button>
             </div>
           </form>
           <h2 className="text-white text-center text-xl">
-            ¿Ya tiene una cuenta?{" "}
+            ¿Ya tienes una cuenta?{" "}
             <Link to="/iniciar-sesion">iniciar sesion</Link>
           </h2>
         </div>
