@@ -1,27 +1,46 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Navbar from "./components/navbar/navbar";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/home/home";
 import Footer from "./components/footer/footer";
 import Registro from "./pages/registro/registro";
 import IniciarSesion from "./pages/iniciarSesion/iniciarSesion";
+import Paciente from "./pages/paciente/paciente";
+import Turnos from "./components/turnos/turnos"
+import Solicitar from ":/components/solicitar/solicitar"
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [mostrarNavYFoot, setMostrarNavYFoot] = useState(true);
+  const direccionActual = useLocation().pathname;
+
+  useEffect(() => {
+    if (
+      direccionActual !== "/paciente" &&
+      direccionActual !== "/doctor" &&
+      direccionActual !== "/admin"
+    ) {
+      setMostrarNavYFoot(true);
+    } else {
+      setMostrarNavYFoot(false);
+    }
+  }, [direccionActual]);
 
   return (
     <>
       <section className="bg-orange-50 min-h-screen">
-        <Navbar></Navbar>
+        {mostrarNavYFoot && <Navbar></Navbar>}
+
         <Routes>
-          <Route path="/" element={<Home />} /> 
-          <Route path="/registro" element={<Registro/>}/>
-          <Route path="/iniciarSesion" element={<IniciarSesion/>}/>
+          <Route path="/" element={<Home />} />
+          <Route path="/registro" element={<Registro />} />
+          <Route path="/iniciarSesion" element={<IniciarSesion />} />
+          <Route path="/paciente" element={<Paciente />} />
+          <Route path="/turnos" element={<Turnos/>} />
+          <Route path="/solicitar" element={<Solicitar />} />
         </Routes>
-        <Footer></Footer>
+
+        {mostrarNavYFoot && <Footer></Footer>}
       </section>
     </>
   );
