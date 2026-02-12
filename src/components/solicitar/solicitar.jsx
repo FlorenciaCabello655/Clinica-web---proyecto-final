@@ -1,5 +1,8 @@
-function solicitar (){
-
+function Solicitar (){
+return(
+    <> <h1>fyfhcvhfhffcgh</h1>
+    </>
+)
 }
 
-export default solicitar;
+export default Solicitar;

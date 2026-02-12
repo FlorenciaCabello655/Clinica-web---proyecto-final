@@ -1,5 +1,7 @@
-function turnos(){
-
+function Turnos(){
+return(
+    <h1>gdggfh</h1>
+)
 }
 
-export default turnos;
+export default Turnos;

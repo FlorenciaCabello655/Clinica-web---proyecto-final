@@ -1,5 +1,7 @@
 import { ClipboardPlus, List } from "lucide-react";
 import { useState } from "react";
+import Turnos from "../../components/turnos/turnos";
+import Solicitar from "../../components/solicitar/solicitar";
 
 function paciente() {
   const [seccion, setSeccion] = useState("turnos");
@@ -24,9 +26,9 @@ function paciente() {
         </sidebar>
         <div className="fixed bottom-0 top-20 end-0 start-[18%] overflow-y-auto p-5">
           {seccion === "turnos" ? (
-            <h1>turnos</h1>
+            <Turnos/>
           ) : seccion == "solicitar" ? (
-            <h1>solicitar</h1>
+            <Solicitar/>
           ) : null}
         </div>
       </section>
