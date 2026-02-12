@@ -1,6 +1,6 @@
 function Turnos(){
 return(
-    <h1>gdggfh</h1>
+    <h1></h1>
 )
 }
 
