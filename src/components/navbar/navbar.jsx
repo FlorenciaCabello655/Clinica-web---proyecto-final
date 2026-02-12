@@ -39,7 +39,7 @@ function Navbar() {
               ? "bg-orange-400"
               : "bg-orange-200 hover:bg-orange-300"
           }`}
-          to="/login"
+          to="/iniciarSesion"
         >
           Iniciar sesión
         </Link>

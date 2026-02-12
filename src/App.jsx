@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/home/home";
 import Footer from "./components/footer/footer";
 import Registro from "./pages/registro/registro";
+import IniciarSesion from "./pages/iniciarSesion/iniciarSesion";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} /> 
           <Route path="/registro" element={<Registro/>}/>
+          <Route path="/iniciarSesion" element={<IniciarSesion/>}/>
         </Routes>
         <Footer></Footer>
       </section>

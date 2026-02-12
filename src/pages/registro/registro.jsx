@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function Registro() {
-  const { formulario, setformulario } = useState({
+  const [ formulario, setFormulario ] = useState({
     nombre: "",
     telefono: "",
     rol: "paciente",
@@ -11,6 +11,16 @@ function Registro() {
     email: "",
     contraseña: "",
   });
+
+  const actualizarDatos = (evento) => {
+    evento.preventDefault()
+    setFormulario({...formulario, [evento.target.name]:evento.target.value})
+  }
+
+  const enviarFormulario = async (evento) => {
+    evento.preventDefault()
+    console.log(formulario)
+  }
 
   return (
     <>
@@ -20,7 +30,7 @@ function Registro() {
           <h2 className="text-white text-xl text-center">
             Por favor registrarse para continuar
           </h2>
-          <form className="w-full">
+          <form onSubmit={enviarFormulario} className="w-full">
             <div className="flex w-full mb-3 bg-white rounded-lg border border-gray-300 items-center">
               <User className="w-10 text-center" size={20} />
               <input
@@ -28,6 +38,7 @@ function Registro() {
                 type="text"
                 name="nombre"
                 placeholder="Nombre"
+                onChange={actualizarDatos}
                 required
               />
             </div>
@@ -39,6 +50,7 @@ function Registro() {
                 type="number"
                 name="telefono"
                 placeholder="Numero de telefono"
+                onChange={actualizarDatos}
                 required
               />
             </div>
@@ -48,17 +60,20 @@ function Registro() {
               <select
                 className="w-full  bg-gray-200 focus:bg-white outline-none border-none p-1 rounded text-sm"
                 name="rol"
+                onChange={actualizarDatos}
               >
                 <option value="paciente">Paciente</option>
                 <option value="doctor">Doctor/a</option>
+
               </select>
             </div>
-            {formulario === "doctor" && (
+            {formulario.rol === "doctor" && (
               <div className="flex w-full mb-3 bg-white rounded-lg border border-gray-300 items-center ">
                 <BriefcaseMedical className="w-10 text-center" size={20} />
                 <select
                   className="w-full  bg-gray-200 focus:bg-white outline-none border-none  p-1 rounded text-sm"
                   name="especialidad"
+                  onChange={actualizarDatos}
                 >
                   <option value="cardiologia">Cardiologia</option>
                   <option value="clinico">Clinico</option>
@@ -77,6 +92,7 @@ function Registro() {
                 type="email"
                 name="email"
                 placeholder="email"
+                onChange={actualizarDatos}
                 required
               />
             </div>
@@ -88,6 +104,7 @@ function Registro() {
                 type="password"
                 name="contraseña"
                 placeholder="Contraseña"
+                onChange={actualizarDatos}
                 required
               />
             </div>
