@@ -120,7 +120,7 @@ function Registro() {
           </form>
           <h2 className="text-white text-center text-xl">
             ¿Ya tienes una cuenta?{" "}
-            <Link to="/iniciar-sesion">iniciar sesion</Link>
+            <Link to="/iniciarSesion">iniciar sesion</Link>
           </h2>
         </div>
       </section>
