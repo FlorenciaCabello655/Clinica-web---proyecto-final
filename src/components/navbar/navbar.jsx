@@ -35,7 +35,7 @@ function Navbar() {
 
         <Link
           className={`p-2 rounded-full font-bold text-white duration-200 ${
-            location.pathname === "/login"
+            location.pathname === "/iniciarSesion"
               ? "bg-orange-400"
               : "bg-orange-200 hover:bg-orange-300"
           }`}

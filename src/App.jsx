@@ -7,6 +7,8 @@ import Footer from "./components/footer/footer";
 import Registro from "./pages/registro/registro";
 import IniciarSesion from "./pages/iniciarSesion/iniciarSesion";
 import Paciente from "./pages/paciente/paciente";
+import Doctor from "./pages/doctor/doctor";
+import Admin from "./pages/admin/admin";
 
 function App() {
   const [mostrarNavYFoot, setMostrarNavYFoot] = useState(true);
@@ -34,6 +36,8 @@ function App() {
           <Route path="/registro" element={<Registro />} />
           <Route path="/iniciarSesion" element={<IniciarSesion />} />
           <Route path="/paciente" element={<Paciente />} />
+          <Route path="/doctor" element={<Doctor />} />
+           <Route path="/admin" element={<Admin />} />
         </Routes>
 
         {mostrarNavYFoot && <Footer></Footer>}

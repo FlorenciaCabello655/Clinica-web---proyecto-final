@@ -20,9 +20,9 @@ function iniciarSesion () {
     return(
         <section className="w-full min-h-screen p-6"  >
             <div className="w-100 h-110 p-5 bg-[#A2AF9B] m-auto mt-30 rounded-lg">
-            <h1 className="text-white text-4xl text-center">Registrarse</h1>
+            <h1 className="text-white text-4xl text-center">Iniciar sesion</h1>
               <h2 className="text-white text-xl text-center">
-                Por favor registrarse para continuar
+              Iniciar sesion para continuar
               </h2>   
               <form onSubmit={enviarFormulario} className="w-full"> 
                          <div className="flex w-full mb-3 bg-white rounded-lg border border-gray-300 items-center ">
@@ -54,14 +54,14 @@ function iniciarSesion () {
                     type="submit"
                     className="text-white text-xl bg-orange-200 rounded-4xl p-2 "
                   >
-                    <h1>Registrarse</h1>
+                    <h1>Iniciar sesion</h1>
                   </button>
                 </div>
               </form>
     
                <h2 className="text-white text-center text-xl">
                 ¿No tienes una cuenta?{" "}
-                <Link to="/Registro">registrate</Link>
+                <Link to="/registro">registrate</Link>
               </h2>
             </div>
     

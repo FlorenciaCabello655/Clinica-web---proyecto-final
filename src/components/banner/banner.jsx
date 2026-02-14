@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import doctora from "../../assets/doctora_banner.png";
 
 function Banner() {
@@ -17,13 +17,20 @@ function Banner() {
             bienestar.
           </h2>
           <div className="flex w-full justify-center md:justify-start mt-3">
-            <Link className="p-2 rounded-full font-bold text-white duration-200 bg-[#A2AF9B]">
+            <Link
+              to={"/paciente"}
+              className="p-2 rounded-full font-bold text-white duration-200 bg-[#A2AF9B]"
+            >
               Solicitar turno
             </Link>
           </div>
         </div>
         <div>
-          <img src={doctora} alt="" className="hidden md:block md:h-100 lg:h-150 w-auto " />
+          <img
+            src={doctora}
+            alt=""
+            className="hidden md:block md:h-100 lg:h-150 w-auto "
+          />
         </div>
       </div>
     </>
