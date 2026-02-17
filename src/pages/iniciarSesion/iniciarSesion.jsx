@@ -35,7 +35,7 @@ function IniciarSesion() {
         // usamos sweetAlert, para mostrar la alerta
         icon: "success",
         title: `Bienvenido ${respuestaBack.data.user.nombre}`, // mostramos el mensaje personalizado
-        confirmButtonText: "Aceptar",
+        timer: 1500
       });
       localStorage.setItem("data_usuario", JSON.stringify(respuestaBack.data));
       setUsuario(respuestaBack.data.user);

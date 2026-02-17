@@ -1,11 +1,13 @@
-import { CircleUserRound, ClipboardPlus, List } from "lucide-react";
-import { useState } from "react";
+import { CircleUserRound, ClipboardPlus, List, LogOut } from "lucide-react";
+import { useContext, useState } from "react";
 import TurnosDoctor from "../../components/turnosDoctor/turnosDoctor";
 import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
+import { Context } from "../../context/context";
 
 function Doctor() {
   const [seccion, setSeccion] = useState("turnos");
+  const { usuario, rol, cerrarSesion } = useContext(Context);
 
   return (
     <>
@@ -15,7 +17,9 @@ function Doctor() {
             <div className="bg-slate-200 me-1 rounded-full">
               <CircleUserRound size={25} className="text-gray-500" />
             </div>
-            <span className="text-slate-600">Fulano Detal</span>
+            <span className="text-slate-600">
+              {usuario.nombre} - ({rol})
+            </span>
           </div>
           <Link
             className={`font-semibold bg-[#A2AF9B] hover:opacity-75 duration-200 rounded-lg px-2 py-1 text-white`}
@@ -34,6 +38,12 @@ function Doctor() {
             onClick={() => setSeccion("turnos")}
           >
             <List size={20} className="w-10" /> Turnos
+          </button>
+          <button
+            className={`flex items-center hover:text-slate-50 mb-2 cursor-pointer font-bold text-lg text-slate-200`}
+            onClick={() => cerrarSesion()}
+          >
+            <LogOut size={20} className="w-10" /> Cerrar sesión
           </button>
         </sidebar>
         <div className="fixed bottom-0 top-20 end-0 start-[18%] overflow-y-auto p-5">

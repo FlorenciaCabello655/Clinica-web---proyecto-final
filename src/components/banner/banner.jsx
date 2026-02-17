@@ -1,7 +1,20 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import doctora from "../../assets/doctora_banner.png";
+import { useContext } from "react";
+import { Context } from "../../context/context";
 
 function Banner() {
+  const { usuario, rol } = useContext(Context);
+  const navigate = useNavigate();
+
+  const redireccionarSolicitar = () => {
+    if (!usuario) {
+      navigate("/iniciarSesion");
+    } else {
+      navigate("/paciente");
+    }
+  };
+
   return (
     <>
       <div className="bg-[#DCCFC0] w-full lg:h-150 flex justify-between items-center p-4 md:ps-10">
@@ -17,12 +30,14 @@ function Banner() {
             bienestar.
           </h2>
           <div className="flex w-full justify-center md:justify-start mt-3">
-            <Link
-              to={"/paciente"}
-              className="p-2 rounded-full font-bold text-white duration-200 bg-[#A2AF9B]"
-            >
-              Solicitar turno
-            </Link>
+            {(rol == "paciente" || !usuario) && (
+              <button
+                onClick={() => redireccionarSolicitar()}
+                className="p-2 rounded-full font-bold text-white duration-200 bg-[#A2AF9B] hover:opacity-75 cursor-pointer"
+              >
+                Solicitar turno
+              </button>
+            )}
           </div>
         </div>
         <div>
