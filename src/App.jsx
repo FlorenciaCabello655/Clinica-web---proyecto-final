@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import "./App.css";
 import Navbar from "./components/navbar/navbar";
 import { Route, Routes, useLocation } from "react-router-dom";
@@ -9,35 +8,41 @@ import IniciarSesion from "./pages/iniciarSesion/iniciarSesion";
 import Paciente from "./pages/paciente/paciente";
 import Doctor from "./pages/doctor/doctor";
 import Admin from "./pages/admin/admin";
+import { useContext, useEffect } from "react";
+import { Context } from "./context/context";
 
 function App() {
-  const [mostrarNavYFoot, setMostrarNavYFoot] = useState(true);
   const direccionActual = useLocation().pathname;
+  const rutasSinNav = ["/paciente", "/doctor", "/admin"];
+  const mostrarNavYFoot = !rutasSinNav.includes(direccionActual);
+  const { setUsuario, setRol, rol } = useContext(Context);
 
   useEffect(() => {
-    if (
-      direccionActual !== "/paciente" &&
-      direccionActual !== "/doctor" &&
-      direccionActual !== "/admin"
-    ) {
-      setMostrarNavYFoot(true);
+    const dataDelUsuario = localStorage.getItem("data_usuario");
+    if (dataDelUsuario) {
+      const dataTransformada = JSON.parse(dataDelUsuario);
+      setUsuario(dataTransformada.user);
+      setRol(dataTransformada.user.rol);
     } else {
-      setMostrarNavYFoot(false);
+      setUsuario(null);
+      setRol(null);
     }
-  }, [direccionActual]);
+  }, [setUsuario, setRol]);
 
   return (
     <>
       <section className="bg-orange-50 min-h-screen">
         {mostrarNavYFoot && <Navbar></Navbar>}
-
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/registro" element={<Registro />} />
           <Route path="/iniciarSesion" element={<IniciarSesion />} />
-          <Route path="/paciente" element={<Paciente />} />
-          <Route path="/doctor" element={<Doctor />} />
-           <Route path="/admin" element={<Admin />} />
+          <Route
+            path="/paciente"
+            element={rol == "paciente" ? <Paciente /> : null}
+          />
+          <Route path="/doctor" element={rol == "doctor" ? <Doctor /> : null} />
+          <Route path="/admin" element={rol == "admin" ? <Admin /> : null} />
         </Routes>
 
         {mostrarNavYFoot && <Footer></Footer>}

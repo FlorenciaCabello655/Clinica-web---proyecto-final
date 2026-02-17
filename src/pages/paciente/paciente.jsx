@@ -5,7 +5,7 @@ import Solicitar from "../../components/solicitar/solicitar";
 import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 
-function paciente() {
+function Paciente() {
   const [seccion, setSeccion] = useState("solicitar");
 
   return (
@@ -61,4 +61,4 @@ function paciente() {
   );
 }
 
-export default paciente;
+export default Paciente;

@@ -1,26 +1,51 @@
 import { BriefcaseMedical, Lock, Mail, Phone, User, Users } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axiosInstancia from "../../api/apiAxios";
+import Swal from "sweetalert2"; // swal de sweetalert2 es un componente de alertas dinamico, para mostrar mensajes
 
 function Registro() {
-  const [ formulario, setFormulario ] = useState({
+  const [formulario, setFormulario] = useState({
     nombre: "",
     telefono: "",
     rol: "paciente",
     especialidad: "",
     email: "",
-    contraseña: "",
+    password: "",
   });
+  const navigate = useNavigate(); // se usa useNavigate para poder navegar entre rutas en el codigo
 
   const actualizarDatos = (evento) => {
-    evento.preventDefault()
-    setFormulario({...formulario, [evento.target.name]:evento.target.value})
-  }
+    evento.preventDefault();
+    setFormulario({ ...formulario, [evento.target.name]: evento.target.value }); // actualizamos los valores del formulario en el useState, basandose en los nombres de los input para las propiedades
+  };
 
   const enviarFormulario = async (evento) => {
-    evento.preventDefault()
-    console.log(formulario)
-  }
+    evento.preventDefault();
+    try {
+      // Hacemos la consulta del registro al backend con POST, a la ruta especifica
+      const response = await axiosInstancia.post( // {data} en data viene lo que manda el backend
+        "/api/auth/register",
+        formulario,
+      );
+      Swal.fire({
+        // usamos sweetAlert, para mostrar la alerta
+        icon: "success",
+        title: response.data.msg || "Registro exitoso.", // mostramos el mensaje que llega desde backend "o" "||" uno por defecto.
+        confirmButtonText: 'Aceptar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // esperamos que el usuario haga click en el boton de confirmar para redireccionarlo a 'iniciarSesion' con navigate
+          navigate("/iniciarSesion");
+        }
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error", // mostramos el alert del error
+        title: error.data.msg || "Error al registrarse.",
+      });
+    }
+  };
 
   return (
     <>
@@ -64,7 +89,6 @@ function Registro() {
               >
                 <option value="paciente">Paciente</option>
                 <option value="doctor">Doctor/a</option>
-
               </select>
             </div>
             {formulario.rol === "doctor" && (
@@ -102,7 +126,7 @@ function Registro() {
               <input
                 className="w-full  bg-gray-200 focus:bg-white outline-none border-none p-1 rounded text-sm"
                 type="password"
-                name="contraseña"
+                name="password"
                 placeholder="Contraseña"
                 onChange={actualizarDatos}
                 required

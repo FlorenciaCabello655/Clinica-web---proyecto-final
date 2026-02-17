@@ -1,19 +1,18 @@
-import { createContext, useState } from "react";
-
-export const Context = createContext();
+import { useState } from "react";
+import { Context } from "./context";
 
 function AppContext({ children }) {
-const [usuario, setUsuario] = useState(null)
-const [rol, setRol] = useState(null) // puede ser admin, doctor o paciente
+  const [usuario, setUsuario] = useState(null); // un useState para los datos de los usuarios
+  const [rol, setRol] = useState(null);
 
-const valor ={
+  const valor = {
     usuario,
     setUsuario,
     rol,
     setRol,
-}
+  };
 
-  return <Context.Provider valor={valor}>{children}</Context.Provider>;
+  return <Context.Provider value={valor}>{children}</Context.Provider>;
 }
 
 export default AppContext;

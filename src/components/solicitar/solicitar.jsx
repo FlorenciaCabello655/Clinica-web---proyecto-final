@@ -3,9 +3,10 @@ import { useState } from "react";
 
 function Solicitar() {
   const [formulario, setFormulario] = useState({
-    doctor: "",
+    medicoId: null,
     fecha: "",
     hora: "",
+    motivo: "",
   });
   const hoy = new Date(); // dd/mm/yyyy Timezone hh:mm:ss
   const fechaActual = hoy.toISOString().split("T")[0]; // [ dd/mm/yyyy , hh:mm:ss]
@@ -21,6 +22,12 @@ function Solicitar() {
   const enviarFormulario = async (evento) => {
     evento.preventDefault();
     console.log(formulario);
+    let body = {
+      ...formulario,
+      fecha: `${formulario.fecha} ${formulario.hora}`, // => dd/mm/aaaa hh:mm
+    };
+    delete body.hora;
+    
   };
 
   return (
@@ -36,7 +43,7 @@ function Solicitar() {
               <div className="flex w-full mb-3 bg-white rounded-lg border border-gray-300 items-center ">
                 <select
                   className="w-full  bg-gray-200 focus:bg-white outline-none border-none  p-1 rounded text-sm"
-                  name="doctor"
+                  name="medicoId"
                   onChange={actualizarDatos}
                 >
                   <option value={null} disabled selected>
@@ -75,6 +82,21 @@ function Solicitar() {
                     required
                   />
                 </div>
+              </div>
+            </div>
+
+            <div>
+              <label className="font-semibold text-white">
+                MOTIVO <span className="text-white text-xs">*opcional</span>
+              </label>
+              <div className="flex w-full mb-3 bg-white rounded-lg border border-gray-300 items-center ">
+                <textarea
+                  className="w-full p-1 text-sm h-50 resize-none overflow-y-hidden"
+                  name="motivo"
+                  placeholder="Describa sus sintomas"
+                  onChange={actualizarDatos}
+                  style={{ height: "8.5rem" }}
+                ></textarea>
               </div>
             </div>
 
