@@ -1,7 +1,9 @@
 import { Form } from "lucide-react";
 import { useState } from "react";
+import axiosInstancia from "../../api/apiAxios";
+import Swal from "sweetalert2";
 
-function Solicitar() {
+function Solicitar({ setSeccion }) {
   const [formulario, setFormulario] = useState({
     medicoId: null,
     fecha: "",
@@ -21,13 +23,30 @@ function Solicitar() {
 
   const enviarFormulario = async (evento) => {
     evento.preventDefault();
-    console.log(formulario);
     let body = {
       ...formulario,
-      fecha: `${formulario.fecha} ${formulario.hora}`, // => dd/mm/aaaa hh:mm
+      fecha: `${formulario.fecha} ${formulario.hora}`, // => dd/mm/aaaa hh:mm, formateamos la fecha
     };
     delete body.hora;
-    
+    try {
+      // Hacemos la consulta del registro al backend con POST, a la ruta especifica
+      const respuestaBack = await axiosInstancia.post(
+        "/api/turnos",
+        body, // pasamos el body contruido
+      );
+      Swal.fire({
+        // usamos sweetAlert, para mostrar la alerta
+        icon: "success",
+        title: respuestaBack.data.msg || `Turno solicitado correctamente.`, // mostramos el mensaje personalizado
+        timer: 2000,
+      });
+      setSeccion("turnos");
+    } catch (error) {
+      Swal.fire({
+        icon: "error", // mostramos el alert del error
+        title: error.data.msg || "Error al solicitar turno.",
+      });
+    }
   };
 
   return (

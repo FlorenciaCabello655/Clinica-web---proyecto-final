@@ -57,7 +57,7 @@ function Paciente() {
           {seccion === "turnos" ? (
             <Turnos />
           ) : seccion == "solicitar" ? (
-            <Solicitar />
+            <Solicitar setSeccion={setSeccion} />
           ) : null}
         </div>
       </section>

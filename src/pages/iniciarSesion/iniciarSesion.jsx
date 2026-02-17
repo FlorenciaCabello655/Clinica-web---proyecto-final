@@ -27,7 +27,6 @@ function IniciarSesion() {
     try {
       // Hacemos la consulta del registro al backend con POST, a la ruta especifica
       const respuestaBack = await axiosInstancia.post(
-        // {data} en data viene lo que manda el backend
         "/api/auth/login",
         iniciarSesionForm,
       );
@@ -35,12 +34,12 @@ function IniciarSesion() {
         // usamos sweetAlert, para mostrar la alerta
         icon: "success",
         title: `Bienvenido ${respuestaBack.data.user.nombre}`, // mostramos el mensaje personalizado
-        timer: 1500
+        timer: 1500,
       });
-      localStorage.setItem("data_usuario", JSON.stringify(respuestaBack.data));
-      setUsuario(respuestaBack.data.user);
+      localStorage.setItem("data_usuario", JSON.stringify(respuestaBack.data)); // {data} en data viene lo que manda el backend
+      setUsuario(respuestaBack.data.user); // guardamos en el context los datos del usuario y el rol
       setRol(respuestaBack.data.user.rol);
-      redireccionarPanel(respuestaBack.data.user.rol)
+      redireccionarPanel(respuestaBack.data.user.rol); // redireccionamos al panel dependiendo el caso del rol
     } catch (error) {
       Swal.fire({
         icon: "error", // mostramos el alert del error

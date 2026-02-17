@@ -18,13 +18,13 @@ function App() {
   const { setUsuario, setRol, rol } = useContext(Context);
 
   useEffect(() => {
-    const dataDelUsuario = localStorage.getItem("data_usuario");
+    const dataDelUsuario = localStorage.getItem("data_usuario"); // traemos los datos del localstorage
     if (dataDelUsuario) {
-      const dataTransformada = JSON.parse(dataDelUsuario);
+      const dataTransformada = JSON.parse(dataDelUsuario);  // guaramos lo datos del usuario y el rol en el context
       setUsuario(dataTransformada.user);
       setRol(dataTransformada.user.rol);
     } else {
-      setUsuario(null);
+      setUsuario(null); // sino lo dejamos en null
       setRol(null);
     }
   }, [setUsuario, setRol]);
