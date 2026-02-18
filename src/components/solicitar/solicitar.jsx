@@ -3,7 +3,7 @@ import { useState } from "react";
 import axiosInstancia from "../../api/apiAxios";
 import Swal from "sweetalert2";
 
-function Solicitar({ setSeccion }) {
+function Solicitar({setSeccion}) {
   const [formulario, setFormulario] = useState({
     medicoId: null,
     fecha: "",
