@@ -1,15 +1,18 @@
 import { Form } from "lucide-react";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axiosInstancia from "../../api/apiAxios";
 import Swal from "sweetalert2";
+import { Context } from "../../context/context";
 
-function Solicitar({setSeccion}) {
+function Solicitar({ setSeccion }) {
   const [formulario, setFormulario] = useState({
     medicoId: null,
     fecha: "",
     hora: "",
     motivo: "",
   });
+  const { setLoading } = useContext(Context);
+  const [medicos, setMedicos] = useState([]);
   const hoy = new Date(); // dd/mm/yyyy Timezone hh:mm:ss
   const fechaActual = hoy.toISOString().split("T")[0]; // [ dd/mm/yyyy , hh:mm:ss]
   const horas = hoy.getHours().toString().padStart(2, "0"); // padStart asegura que horas de un digito tenga un cero delante = 2:57 => 02:57
@@ -21,6 +24,22 @@ function Solicitar({setSeccion}) {
     setFormulario({ ...formulario, [evento.target.name]: evento.target.value });
   };
 
+  useEffect(() => {
+    const traerMedicos = async () => {
+      try {
+        const respuestaBack = await axiosInstancia.get("/api/users/medicos");
+        setMedicos(respuestaBack.data.medicos);
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: error.response.data.msg || "Error al traer los medicos",
+          timer: 2000,
+        });
+      }
+    };
+    traerMedicos();
+  }, []);
+
   const enviarFormulario = async (evento) => {
     evento.preventDefault();
     let body = {
@@ -28,6 +47,7 @@ function Solicitar({setSeccion}) {
       fecha: `${formulario.fecha} ${formulario.hora}`, // => dd/mm/aaaa hh:mm, formateamos la fecha
     };
     delete body.hora;
+    setLoading(true);
     try {
       // Hacemos la consulta del registro al backend con POST, a la ruta especifica
       const respuestaBack = await axiosInstancia.post(
@@ -41,11 +61,13 @@ function Solicitar({setSeccion}) {
         timer: 2000,
       });
       setSeccion("turnos");
+      setLoading(false);
     } catch (error) {
       Swal.fire({
         icon: "error", // mostramos el alert del error
-        title: error.data.msg || "Error al solicitar turno.",
+        title: error.response.data.msg || "Error al solicitar turno.",
       });
+      setLoading(false);
     }
   };
 
@@ -68,6 +90,11 @@ function Solicitar({setSeccion}) {
                   <option value={null} disabled selected>
                     Seleccione un doctor/a
                   </option>
+                  {medicos.map((medico, index) => (
+                    <option key={index} value={medico._id}>
+                      {medico.nombre} - {medico.especialidad}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>

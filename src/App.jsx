@@ -10,17 +10,18 @@ import Doctor from "./pages/doctor/doctor";
 import Admin from "./pages/admin/admin";
 import { useContext, useEffect } from "react";
 import { Context } from "./context/context";
+import Loader from "./components/loader/loader";
 
 function App() {
   const direccionActual = useLocation().pathname;
   const rutasSinNav = ["/paciente", "/doctor", "/admin"];
   const mostrarNavYFoot = !rutasSinNav.includes(direccionActual);
-  const { setUsuario, setRol, rol } = useContext(Context);
+  const { setUsuario, setRol, rol, loading } = useContext(Context);
 
   useEffect(() => {
     const dataDelUsuario = localStorage.getItem("data_usuario"); // traemos los datos del localstorage
     if (dataDelUsuario) {
-      const dataTransformada = JSON.parse(dataDelUsuario);  // guaramos lo datos del usuario y el rol en el context
+      const dataTransformada = JSON.parse(dataDelUsuario); // guaramos lo datos del usuario y el rol en el context
       setUsuario(dataTransformada.user);
       setRol(dataTransformada.user.rol);
     } else {
@@ -41,11 +42,12 @@ function App() {
             path="/paciente"
             element={rol == "paciente" ? <Paciente /> : null}
           />
-          <Route path="/doctor" element={rol == "doctor" ? <Doctor /> : null} />
+          <Route path="/doctor" element={rol == "medico" ? <Doctor /> : null} />
           <Route path="/admin" element={rol == "admin" ? <Admin /> : null} />
         </Routes>
 
         {mostrarNavYFoot && <Footer></Footer>}
+        {loading && <Loader></Loader>}
       </section>
     </>
   );

@@ -1,40 +1,49 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axiosInstancia from "../../api/apiAxios";
 import Swal from "sweetalert2";
+import { Context } from "../../context/context";
 
 function ListaUsuarios() {
   const [medicos, setMedicos] = useState([]);
+  const { setLoading } = useContext(Context);
 
   useEffect(() => {
     const traerMedicos = async () => {
+      setLoading(true);
       try {
         const respuestaBack = await axiosInstancia.get("/api/users/medicos");
         setMedicos(respuestaBack.data.medicos);
+        setLoading(false);
       } catch (error) {
         Swal.fire({
           icon: "error",
-          title: error.data.msg || "Error al traer los medicos",
+          title: error.response.data.msg || "Error al traer los medicos",
           timer: 2000,
         });
+        setLoading(false);
       }
     };
     traerMedicos();
-  }, []);
+  }, [setLoading]);
 
- const traerMedicosActualizados = async () => {
-      try {
-        const respuestaBack = await axiosInstancia.get("/api/users/medicos");
-        setMedicos(respuestaBack.data.medicos);
-      } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: error.data.msg || "Error al traer los medicos",
-          timer: 2000,
-        });
-      }
-    };
+  const traerMedicosActualizados = async () => {
+    setLoading(true);
+    try {
+      const respuestaBack = await axiosInstancia.get("/api/users/medicos");
+      setMedicos(respuestaBack.data.medicos);
+      setLoading(false);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: error.response.data.msg || "Error al traer los medicos",
+        timer: 2000,
+      });
+      setLoading(false);
+    }
+  };
 
- const aceptarMedico = async (idDeMedico) => {
+  const aceptarMedico = async (idDeMedico) => {
+    setLoading(true);
     try {
       const respuestaBack = await axiosInstancia.put(
         `/api/users/medico/${idDeMedico}/aceptar`,
@@ -44,16 +53,17 @@ function ListaUsuarios() {
         title: respuestaBack.data.msg || "Doctor/a aceptado",
         timer: 2000,
       });
+      setLoading(false);
       traerMedicosActualizados();
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: error.data.msg || "Error al aceptar.",
+        title: error.response.data.msg || "Error al aceptar.",
         timer: 2000,
       });
+      setLoading(false);
     }
   };
-
 
   return (
     <>
@@ -61,22 +71,33 @@ function ListaUsuarios() {
         USUARIOS
       </h1>
       <section>
-        {medicos.map((medico,index)=>(
-        <div key={index} className="flex justify-center bg-[#A2AF9B] rounded-lg w-full h-100 mt-8 flex-col">
-          <h2 className="text-xl text-white p-4">Nombre:{medico.nombre}</h2>
-          <h2 className="text-xl text-white p-4">Numero de telefono:{medico.telefono}</h2>
-          <h2 className="text-xl text-white p-4">Especialidad:{medico.especialidad}</h2>
-          <h2 className="text-xl text-white p-4">Email:{medico.email}</h2>
-          <h2 className="text-xl text-white p-4">Estado:{medico.estado}</h2>
+        {medicos.map((medico, index) => (
+          <div
+            key={index}
+            className="flex justify-center bg-[#A2AF9B] rounded-lg w-full mt-8 flex-col"
+          >
+            <h2 className="text-xl text-white p-2">Nombre:{medico.nombre}</h2>
+            <h2 className="text-xl text-white p-2">
+              Numero de telefono:{medico.telefono}
+            </h2>
+            <h2 className="text-xl text-white p-2">
+              Especialidad:{medico.especialidad}
+            </h2>
+            <h2 className="text-xl text-white p-2">Email:{medico.email}</h2>
+            <h2 className="text-xl text-white p-2">Estado:{medico.estado}</h2>
 
-          <div className="flex">
-            <button className="bg-green-500 h-auto w-auto ms-6 rounded-lg text-white p-2" onClick={() => aceptarMedico(medico.id)}>
-              ACEPTAR
-            </button>
+            {medico.estado == "pendiente" && (
+              <div className="flex">
+                <button
+                  className="bg-green-500 h-auto w-auto ms-2 rounded-lg text-white p-2 cursor-pointer"
+                  onClick={() => aceptarMedico(medico._id)}
+                >
+                  ACEPTAR
+                </button>
+              </div>
+            )}
           </div>
-        </div>
         ))}
-
       </section>
     </>
   );

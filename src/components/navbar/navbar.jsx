@@ -61,7 +61,7 @@ function Navbar() {
           </>
         ) : (
           <button
-            className={`p-2 rounded-full font-bold text-white duration-200 bg-orange-200 hover:bg-orange-300`}
+            className={`p-2 rounded-full font-bold text-white duration-200 bg-orange-200 hover:bg-orange-300 cursor-pointer`}
             onClick={() => redireccionarPanel()}
           >
             Ir al panel

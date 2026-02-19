@@ -1,40 +1,49 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axiosInstancia from "../../api/apiAxios";
 import Swal from "sweetalert2";
+import { Context } from "../../context/context";
 
 function TurnosDoctor() {
   const [turnos, setTurnos] = useState([]);
+  const { setLoading } = useContext(Context);
 
   useEffect(() => {
     const traerTurnos = async () => {
+      setLoading(true);
       try {
         const respuestaBack = await axiosInstancia.get("/api/turnos");
         setTurnos(respuestaBack.data.turnos);
+        setLoading(false);
       } catch (error) {
         Swal.fire({
           icon: "error",
-          title: error.data.msg || "Error al traer los turnos",
+          title: error.response.data.msg || "Error al traer los turnos",
           timer: 2000,
         });
+        setLoading(false);
       }
     };
     traerTurnos();
-  }, []);
+  }, [setLoading]);
 
   const traerTurnosActualizados = async () => {
+    setLoading(true);
     try {
       const respuestaBack = await axiosInstancia.get("/api/turnos");
       setTurnos(respuestaBack.data.turnos);
+      setLoading(false);
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: error.data.msg || "Error al traer los turnos",
+        title: error.response.data.msg || "Error al traer los turnos",
         timer: 2000,
       });
+      setLoading(false);
     }
   };
 
   const aceptarTurno = async (idDeTurno) => {
+    setLoading(true);
     try {
       const respuestaBack = await axiosInstancia.put(
         `/api/turnos/${idDeTurno}/confirmar`,
@@ -45,16 +54,19 @@ function TurnosDoctor() {
         timer: 2000,
       });
       traerTurnosActualizados();
+      setLoading(false);
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: error.data.msg || "Error al aceptar turno.",
+        title: error.response.data.msg || "Error al aceptar turno.",
         timer: 2000,
       });
+      setLoading(false);
     }
   };
 
   const cancelarTurno = async (idDeTurno) => {
+    setLoading(true);
     try {
       const respuestaBack = await axiosInstancia.put(
         `/api/turnos/${idDeTurno}/cancelar`,
@@ -65,12 +77,14 @@ function TurnosDoctor() {
         timer: 2000,
       });
       traerTurnosActualizados();
+      setLoading(false);
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: error.data.msg || "Error al cancelar turno",
+        title: error.response.data.msg || "Error al cancelar turno",
         timer: 2000,
       });
+      setLoading(false);
     }
   };
 
@@ -91,20 +105,22 @@ function TurnosDoctor() {
             <h2 className="text-xl text-white p-4">Fecha:{turno.fecha}</h2>
             <h2 className="text-xl text-white p-4">Motivo:{turno.motivo}</h2>
             <h2 className="text-xl text-white p-4">Estado:{turno.estado}</h2>
-            <div className="flex">
-              <button
-                className="bg-red-500 h-auto w-auto ms-6 rounded-lg text-white p-2"
-                onClick={() => cancelarTurno(turno.id)}
-              >
-                RECHAZAR
-              </button>
-              <button
-                className="bg-green-500 h-auto w-auto ms-6 rounded-lg text-white p-2"
-                onClick={() => aceptarTurno(turno.id)}
-              >
-                ACEPTAR
-              </button>
-            </div>
+            {turno.estado == "pendiente" && (
+              <div className="flex">
+                <button
+                  className="bg-red-500 h-auto w-auto ms-6 rounded-lg text-white p-2"
+                  onClick={() => cancelarTurno(turno._id)}
+                >
+                  RECHAZAR
+                </button>
+                <button
+                  className="bg-green-500 h-auto w-auto ms-6 rounded-lg text-white p-2"
+                  onClick={() => aceptarTurno(turno._id)}
+                >
+                  ACEPTAR
+                </button>
+              </div>
+            )}
           </div>
         ))}
       </section>

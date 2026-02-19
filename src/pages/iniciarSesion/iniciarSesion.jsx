@@ -8,10 +8,10 @@ import { Context } from "../../context/context";
 function IniciarSesion() {
   const [iniciarSesionForm, setiniciarSesionForm] = useState({
     email: "",
-    contraseña: "",
+    password: "",
   });
 
-  const { setUsuario, setRol } = useContext(Context);
+  const { setUsuario, setRol, setLoading } = useContext(Context);
   const navigate = useNavigate();
 
   const actualizarDatos = (evento) => {
@@ -24,6 +24,7 @@ function IniciarSesion() {
 
   const enviarFormulario = async (evento) => {
     evento.preventDefault();
+    setLoading(true);
     try {
       // Hacemos la consulta del registro al backend con POST, a la ruta especifica
       const respuestaBack = await axiosInstancia.post(
@@ -34,17 +35,20 @@ function IniciarSesion() {
         // usamos sweetAlert, para mostrar la alerta
         icon: "success",
         title: `Bienvenido ${respuestaBack.data.user.nombre}`, // mostramos el mensaje personalizado
-        timer: 1500,
+        timer: 2000,
       });
       localStorage.setItem("data_usuario", JSON.stringify(respuestaBack.data)); // {data} en data viene lo que manda el backend
       setUsuario(respuestaBack.data.user); // guardamos en el context los datos del usuario y el rol
       setRol(respuestaBack.data.user.rol);
+      setLoading(false);
       redireccionarPanel(respuestaBack.data.user.rol); // redireccionamos al panel dependiendo el caso del rol
     } catch (error) {
       Swal.fire({
         icon: "error", // mostramos el alert del error
-        title: error.data.msg || "Error al registrarse.",
+        title: error.response.data.msg || "Error al iniciar sesión.",
+        timer: 2500,
       });
+      setLoading(false);
     }
   };
 
@@ -83,7 +87,7 @@ function IniciarSesion() {
             <input
               className="w-full  bg-gray-200 focus:bg-white outline-none border-none p-1 rounded text-sm"
               type="password"
-              name="contraseña"
+              name="password"
               placeholder="Contraseña"
               onChange={actualizarDatos}
               required
@@ -93,7 +97,7 @@ function IniciarSesion() {
           <div className="flex justify-center w-full">
             <button
               type="submit"
-              className="text-white text-xl bg-orange-200 rounded-4xl p-2 "
+              className="text-white text-xl bg-orange-200 rounded-4xl p-2 cursor-pointer"
             >
               <h1>Iniciar sesion</h1>
             </button>

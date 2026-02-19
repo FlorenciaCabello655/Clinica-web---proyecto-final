@@ -1,8 +1,9 @@
 import { BriefcaseMedical, Lock, Mail, Phone, User, Users } from "lucide-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstancia from "../../api/apiAxios";
 import Swal from "sweetalert2"; // swal de sweetalert2 es un componente de alertas dinamico, para mostrar mensajes
+import { Context } from "../../context/context";
 
 function Registro() {
   const [formulario, setFormulario] = useState({
@@ -14,6 +15,7 @@ function Registro() {
     password: "",
   });
   const navigate = useNavigate(); // se usa useNavigate para poder navegar entre rutas en el codigo
+  const { setLoading } = useContext(Context);
 
   const actualizarDatos = (evento) => {
     evento.preventDefault();
@@ -22,17 +24,20 @@ function Registro() {
 
   const enviarFormulario = async (evento) => {
     evento.preventDefault();
+    setLoading(true);
     try {
       // Hacemos la consulta del registro al backend con POST, a la ruta especifica
-      const response = await axiosInstancia.post( // {data} en data viene lo que manda el backend
+      const response = await axiosInstancia.post(
+        // {data} en data viene lo que manda el backend
         "/api/auth/register",
         formulario,
       );
+      setLoading(false);
       Swal.fire({
         // usamos sweetAlert, para mostrar la alerta
         icon: "success",
         title: response.data.msg || "Registro exitoso.", // mostramos el mensaje que llega desde backend "o" "||" uno por defecto.
-        confirmButtonText: 'Aceptar'
+        confirmButtonText: "Aceptar",
       }).then((result) => {
         if (result.isConfirmed) {
           // esperamos que el usuario haga click en el boton de confirmar para redireccionarlo a 'iniciarSesion' con navigate
@@ -42,8 +47,9 @@ function Registro() {
     } catch (error) {
       Swal.fire({
         icon: "error", // mostramos el alert del error
-        title: error.data.msg || "Error al registrarse.",
+        title: error.response.data.msg || "Error al registrarse.",
       });
+      setLoading(false);
     }
   };
 
@@ -88,10 +94,10 @@ function Registro() {
                 onChange={actualizarDatos}
               >
                 <option value="paciente">Paciente</option>
-                <option value="doctor">Doctor/a</option>
+                <option value="medico">Doctor/a</option>
               </select>
             </div>
-            {formulario.rol === "doctor" && (
+            {formulario.rol === "medico" && (
               <div className="flex w-full mb-3 bg-white rounded-lg border border-gray-300 items-center ">
                 <BriefcaseMedical className="w-10 text-center" size={20} />
                 <select
@@ -136,7 +142,7 @@ function Registro() {
             <div className="flex justify-center w-full">
               <button
                 type="submit"
-                className="text-white text-xl bg-orange-200 rounded-4xl p-2 "
+                className="text-white text-xl bg-orange-200 rounded-4xl p-2 cursor-pointer"
               >
                 <h1>Registrarse</h1>
               </button>

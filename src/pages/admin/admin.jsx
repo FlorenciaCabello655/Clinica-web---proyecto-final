@@ -34,7 +34,7 @@ function Admin() {
           </div>
           <hr className=" border-white mb-2" />
           <button
-            className={`flex items-center hover:text-slate-50 mb-3 cursor-pointer font-bold text-lg ${seccion == "turnos" ? "text-white" : "text-slate-200"}`}
+            className={`flex items-center hover:text-slate-50 mb-3 cursor-pointer font-bold text-lg ${seccion == "listaUsuarios" ? "text-white" : "text-slate-200"}`}
             onClick={() => setSeccion("listaUsuarios")}
           >
             <List size={20} className="w-10" /> Usuarios

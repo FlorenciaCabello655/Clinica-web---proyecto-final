@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 function AppContext({ children }) {
   const [usuario, setUsuario] = useState(null); // un useState para los datos de los usuarios
   const [rol, setRol] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const cerrarSesion = () => {
@@ -26,6 +27,8 @@ function AppContext({ children }) {
     setUsuario,
     rol,
     setRol,
+    loading,
+    setLoading,
     cerrarSesion,
   };
 
