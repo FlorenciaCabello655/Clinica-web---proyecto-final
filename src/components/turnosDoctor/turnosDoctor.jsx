@@ -96,25 +96,25 @@ function TurnosDoctor() {
       <section>
         {turnos.map((turno, index) => (
           <div
-            className="flex justify-center bg-[#A2AF9B] rounded-lg w-full h-60 mt-8 flex-col"
+            className="flex justify-center bg-[#A2AF9B] rounded-lg w-full mt-8 flex-col p-2"
             key={index}
           >
-            <h2 className="text-xl text-white p-4">
+            <h2 className="text-xl text-white p-2">
               Paciente:{turno.paciente.nombre}
             </h2>
-            <h2 className="text-xl text-white p-4">Fecha:{turno.fecha}</h2>
-            <h2 className="text-xl text-white p-4">Motivo:{turno.motivo}</h2>
-            <h2 className="text-xl text-white p-4">Estado:{turno.estado}</h2>
+            <h2 className="text-xl text-white p-2">Fecha:{turno.fecha}</h2>
+            <h2 className="text-xl text-white p-2">Motivo:{turno.motivo}</h2>
+            <h2 className="text-xl text-white p-2">Estado:{turno.estado}</h2>
             {turno.estado == "pendiente" && (
               <div className="flex">
                 <button
-                  className="bg-red-500 h-auto w-auto ms-6 rounded-lg text-white p-2"
+                  className="bg-red-500 hover:bg-red-400 duration-200 cursor-pointer h-auto w-auto rounded-lg text-white p-2"
                   onClick={() => cancelarTurno(turno._id)}
                 >
                   RECHAZAR
                 </button>
                 <button
-                  className="bg-green-500 h-auto w-auto ms-6 rounded-lg text-white p-2"
+                  className="bg-green-500 hover:bg-green-400 duration-200 cursor-pointer h-auto w-auto ms-6 rounded-lg text-white p-2"
                   onClick={() => aceptarTurno(turno._id)}
                 >
                   ACEPTAR
