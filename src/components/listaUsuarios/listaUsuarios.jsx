@@ -65,6 +65,17 @@ function ListaUsuarios() {
     }
   };
 
+   function mayusculas(str) {
+    if (!str) return "";
+
+    return str
+      .split(" ")
+      .map((palabra) =>
+        palabra ? palabra.charAt(0).toUpperCase() + palabra.slice(1) : "",
+      )
+      .join(" ");
+  }
+
   return (
     <>
       <h1 className="text-4xl text-center text-[#A2AF9B] font-semibold">
@@ -76,15 +87,15 @@ function ListaUsuarios() {
             key={index}
             className="flex justify-center bg-[#A2AF9B] rounded-lg w-full mt-8 flex-col"
           >
-            <h2 className="text-xl text-white p-2">Nombre:{medico.nombre}</h2>
+            <h2 className="text-xl text-white p-2">Nombre:{mayusculas(medico.nombre)}</h2>
             <h2 className="text-xl text-white p-2">
               Numero de telefono:{medico.telefono}
             </h2>
             <h2 className="text-xl text-white p-2">
-              Especialidad:{medico.especialidad}
+              Especialidad:{medico.especialidad.charAt(0).toUpperCase() + medico.especialidad.slice(1)}
             </h2>
             <h2 className="text-xl text-white p-2">Email:{medico.email}</h2>
-            <h2 className="text-xl text-white p-2">Estado:{medico.estado}</h2>
+            <h2 className="text-xl text-white p-2">Estado:{medico.estado.charAt(0).toUpperCase() + medico.estado(1)}</h2>
 
             {medico.estado == "pendiente" && (
               <div className="flex">

@@ -3,7 +3,6 @@ import axios from "axios";
 const axiosInstancia = axios.create({
   // creamos la base de axios, con una ruta base del backend, extraidas de las variables de entorno
   baseURL: import.meta.env.VITE_API_URL,
-  timeout: 5000,
 });
 
 axiosInstancia.interceptors.request.use(
